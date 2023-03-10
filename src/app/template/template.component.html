@@ -1,0 +1,35 @@
+<mat-drawer-container class="container">
+  <mat-drawer mode="side" opened>
+    <mat-card class="demo-inline-calendar-card">
+      <mat-calendar [(selected)]="selected" (selectedChange)="handleDate()" ></mat-calendar>
+    </mat-card>
+    {{current}}
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="schedule">
+      <div class="schedule-keys">
+        <div class="schedule-keys--item" *ngFor="let hourKey of hoursKeys">
+          {{ hourKey.time + ' ' + hourKey.period }}
+        </div>
+      </div>
+      <div cdkDropList class="schedule-list" (cdkDropListDropped)="drop($event)">
+        <div 
+          [ngClass]="(hour.event | json) == '{}' ? 'schedule-box':'schedule-box schedule-box--active'"
+          *ngFor="let hour of events[current]; let i = index" 
+          cdkDrag
+          [cdkDragData]='hour'
+          [cdkDragDisabled]="(hour.event | json) == '{}'"
+          (click)="handleDialog(hour.time, hour.period, hour.event)"
+        >
+          <div class="schedule-box--active-content" *ngIf="(hour.event | json) != '{}'">
+            <div>
+              <b>{{hour.event?.title}}</b><br/>
+              <small>Start at {{hour.event.time+hour.event.period}}</small>
+            </div>
+            <mat-icon fontIcon="delete" (click)="removeItem(i)"></mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

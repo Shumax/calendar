@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Appointment</h2>
+<mat-dialog-content class="mat-typography">
+  <p>{{data.date}}, {{data.hour+data.period}}</p>
+
+  <form #f>
+    <mat-form-field appearance="fill">
+      <mat-label>Add Title</mat-label>
+      <input matInput name="title" [(ngModel)]="data.title">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="data.description" ></textarea>
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>
